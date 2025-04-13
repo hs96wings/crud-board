@@ -10,10 +10,16 @@
                                 v-if="videoId"
                                 :src="`https://drive.google.com/file/d/${videoId}/preview`"
                                 width="100%"
-                                height="750"
+                                height="700"
                                 allowfullscreen
                             ></iframe>
                         </v-respective>
+                        <v-btn
+                            :href="`https://drive.google.com/uc?export=download&id=${videoId}`"
+                            target="_blank"
+                            rel="noopener">
+                            저장하기
+                        </v-btn>
                     </v-card-text>
                 </v-card>
             </v-col>
