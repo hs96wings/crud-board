@@ -3,6 +3,7 @@ package com.example.instagram_server.common.configs;
 import com.example.instagram_server.common.auth.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -31,7 +32,7 @@ public class Securityconfigs {
                 .cors(cors -> cors.configurationSource(configurationSource()))
                 .csrf(AbstractHttpConfigurer::disable) // csrf 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable) // HTTP Basic 비활성화
-                .authorizeHttpRequests(a -> a.requestMatchers("/manage", "/api/videos/add").authenticated().anyRequest().permitAll()) // /manage만 허용하지 않음
+                .authorizeHttpRequests(a -> a.requestMatchers(HttpMethod.POST, "/api/video/add").authenticated().anyRequest().permitAll()) // 영상을 추가하는 곳만 막음
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 방식 사용하지 않음
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
