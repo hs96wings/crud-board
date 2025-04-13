@@ -11,3 +11,8 @@ spring:
     hibernate:
       ddl-auto: update
     show_sql: true
+
+jwt:
+  # instagramserversecretaccesstokeninstagramserversecretaccesstokeninstagramserversecretaccesstoken
+  secretKey: aW5zdGFncmFtc2VydmVyc2VjcmV0YWNjZXNzdG9rZW5pbnN0YWdyYW1zZXJ2ZXJzZWNyZXRhY2Nlc3N0b2tlbmluc3RhZ3JhbXNlcnZlcnNlY3JldGFjY2Vzc3Rva2Vu
+  expiration: 3000

@@ -60,3 +60,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# JWT SECRET_KEY 때문에 추가
+application.yml
