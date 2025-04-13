@@ -33,7 +33,7 @@ export default {
         }
     },
     async created() {
-        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/video/${this.id}`)
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/${this.id}`)
         this.title = response.data.title
         this.videoId = response.data.videoId
         console.log(this.videoId)

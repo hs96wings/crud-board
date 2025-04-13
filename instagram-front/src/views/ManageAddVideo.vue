@@ -38,8 +38,8 @@ export default {
     methods: {
         async add() {
             const videoData = { title: this.title, videoId: this.videoId }
-            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/video/add`, videoData)
-            window.location.href = "/"
+            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/video/add`, videoData)
+            window.location.href = '/video/list'
         }
     }
 }

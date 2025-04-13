@@ -31,7 +31,7 @@ public class Securityconfigs {
                 .cors(cors -> cors.configurationSource(configurationSource()))
                 .csrf(AbstractHttpConfigurer::disable) // csrf 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable) // HTTP Basic 비활성화
-                .authorizeHttpRequests(a -> a.requestMatchers("/manage").authenticated().anyRequest().permitAll()) // /manage만 허용하지 않음
+                .authorizeHttpRequests(a -> a.requestMatchers("/manage", "/api/videos/add").authenticated().anyRequest().permitAll()) // /manage만 허용하지 않음
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 방식 사용하지 않음
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

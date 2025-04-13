@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/video")
+@RequestMapping("/api/video")
 public class VideoController {
     private final VideoService videoService;
 
