@@ -3,7 +3,7 @@
       <v-container>
           <v-row align="center">
               <v-col class="d-flex justify-start">
-                  <v-btn :to="{path: '/video'}">영상 목록</v-btn>
+                  <v-btn :to="{path: '/video/list'}">영상 목록</v-btn>
                   <v-btn :to="{path: '/photo'}">사진 목록</v-btn>
               </v-col>
               <v-col class="text-center">
