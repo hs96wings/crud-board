@@ -3,13 +3,14 @@
         <v-row justify="center">
             <v-col cols="12" sm="4" md="6">
                 <v-card>
-                    <v-card-title class="text-h5 text-center">영상</v-card-title>
+                    <v-card-title class="text-h5 text-center">{{ title }}</v-card-title>
                     <v-card-text>
                         <v-respective aspect-ratio="16/9">
                             <iframe
-                                src="https://drive.google.com/file/d/1UFrMr297g0-OAPwoKIPSU4LVAUSLoDbC/preview"
+                                v-if="videoId"
+                                :src="`https://drive.google.com/file/d/${videoId}/preview`"
                                 width="100%"
-                                height="700"
+                                height="750"
                                 allowfullscreen
                             ></iframe>
                         </v-respective>
@@ -21,8 +22,21 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-    name: 'VideoTest',
+    data() {
+        return {
+            id: this.$route.params.id,
+            title: "",
+            videoId: ""
+        }
+    },
+    async created() {
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/video/${this.id}`)
+        this.title = response.data.title
+        this.videoId = response.data.videoId
+        console.log(this.videoId)
+    }
 }
 </script>
