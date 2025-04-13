@@ -2,10 +2,14 @@ package com.example.instagram_server.video.service;
 
 import com.example.instagram_server.member.domain.Member;
 import com.example.instagram_server.video.domain.Video;
+import com.example.instagram_server.video.dto.VideoListResDto;
 import com.example.instagram_server.video.dto.VideoSaveReqDto;
 import com.example.instagram_server.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -26,5 +30,18 @@ public class VideoService {
                 .videoId(videoSaveReqDto.getVideoId())
                 .build();
         return videoRepository.save(newVideo);
+    }
+
+    public List<VideoListResDto> findAll() {
+        List<Video> videos = videoRepository.findAll();
+        List<VideoListResDto> videoListResDtos = new ArrayList<>();
+        for (Video v : videos) {
+            VideoListResDto videoListResDto = new VideoListResDto();
+            videoListResDto.setId(v.getId());
+            videoListResDto.setTitle(v.getTitle());
+            videoListResDto.setUploadedAt(v.getUploadedAt());
+            videoListResDtos.add(videoListResDto);
+        }
+        return videoListResDtos;
     }
 }

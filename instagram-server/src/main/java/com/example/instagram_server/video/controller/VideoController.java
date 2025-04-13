@@ -3,14 +3,14 @@ package com.example.instagram_server.video.controller;
 import com.example.instagram_server.member.domain.Member;
 import com.example.instagram_server.member.dto.MemberSaveReqDto;
 import com.example.instagram_server.video.domain.Video;
+import com.example.instagram_server.video.dto.VideoListResDto;
 import com.example.instagram_server.video.dto.VideoSaveReqDto;
 import com.example.instagram_server.video.service.VideoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/video")
@@ -26,4 +26,11 @@ public class VideoController {
         Video video = videoService.add(videoSaveReqDto);
         return new ResponseEntity<>(video.getId(), HttpStatus.CREATED);
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<?> videoList() {
+        List<VideoListResDto> dtos = videoService.findAll();
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
 }
