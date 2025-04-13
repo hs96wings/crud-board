@@ -16,7 +16,7 @@
                             <tbody>
                                 <tr v-for="video in videoList" :key="video.id">
                                     <td>{{ video.id }}</td>
-                                    <td><v-btn :to="{path: '/video/'}">{{ video.title }}</v-btn></td>
+                                    <td><v-btn :to="{path: `/video/${video.id}`}">{{ video.title }}</v-btn></td>
                                     <td>{{ video.uploadedAt }}</td>
                                 </tr>
                             </tbody>

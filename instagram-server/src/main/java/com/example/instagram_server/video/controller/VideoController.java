@@ -1,9 +1,8 @@
 package com.example.instagram_server.video.controller;
 
-import com.example.instagram_server.member.domain.Member;
-import com.example.instagram_server.member.dto.MemberSaveReqDto;
 import com.example.instagram_server.video.domain.Video;
 import com.example.instagram_server.video.dto.VideoListResDto;
+import com.example.instagram_server.video.dto.VideoResDto;
 import com.example.instagram_server.video.dto.VideoSaveReqDto;
 import com.example.instagram_server.video.service.VideoService;
 import org.springframework.http.HttpStatus;
@@ -31,6 +30,12 @@ public class VideoController {
     public ResponseEntity<?> videoList() {
         List<VideoListResDto> dtos = videoService.findAll();
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getVideoById(@PathVariable("id") Long id) {
+        VideoResDto video = videoService.findById(id);
+        return new ResponseEntity<>(video, HttpStatus.OK);
     }
 
 }
