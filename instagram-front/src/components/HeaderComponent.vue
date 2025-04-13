@@ -10,6 +10,7 @@
                   <v-btn :to="{path: '/'}">Home</v-btn>
               </v-col>
               <v-col class="d-flex justify-end">
+                  <v-btn v-if="isLogin" :to="{path: '/manage'}">관리</v-btn>
                   <v-btn v-if="!isLogin" :to="{path: '/login'}">로그인</v-btn>
                   <v-btn v-if="isLogin" @click="doLogout">로그아웃</v-btn>
               </v-col>
@@ -19,4 +20,23 @@
 </template>
 
 <script>
+export default {
+    data() {
+        return {
+            isLogin: false,
+        }
+    },
+    created() {
+        const token = localStorage.getItem("token");
+        if (token) {
+            this.isLogin = true;
+        }
+    },
+    methods: {
+        doLogout() {
+            localStorage.clear();
+            window.location.reload();
+        }
+    }
+}
 </script>
