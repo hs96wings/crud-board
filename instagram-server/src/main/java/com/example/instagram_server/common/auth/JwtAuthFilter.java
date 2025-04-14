@@ -33,11 +33,12 @@ public class JwtAuthFilter extends GenericFilter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        Set<String> protectedUrls = Set.of("/api/video/add");
+        Set<String> protectedUrls = Set.of("/api/video/");
         String path = ((HttpServletRequest) request).getRequestURI();
+        boolean requiresAuth = protectedUrls.stream().anyMatch(path::startsWith);
 
         // 인증이 필요한 경우에만 필터 작동
-        if (protectedUrls.contains(path)) {
+        if (requiresAuth) {
             String token = httpServletRequest.getHeader("Authorization");
 
             if (token == null || !token.startsWith("Bearer ")) {

@@ -1,7 +1,10 @@
 <template>
   <v-app>
-    <HeaderComponent />
+    <!-- HeaderComponent에 isLogin과 doLogout 전달 -->
+    <HeaderComponent :isLogin="isLogin" @logout="doLogout" />
+
     <v-main>
+      <!-- router-view에도 isLogin 전달 -->
       <router-view />
     </v-main>
   </v-app>
@@ -13,6 +16,24 @@ export default {
   name: 'App',
   components: {
     HeaderComponent
+  },
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
+  created() {
+    const token = localStorage.getItem("token");
+    if (token){
+      this.isLogin = true;
+    }
+  },
+  methods: {
+    doLogout() {
+      localStorage.clear();
+      this.isLogin = false;
+      window.location.href = "/";
+    }
   }
 }
 </script>

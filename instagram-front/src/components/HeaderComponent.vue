@@ -21,21 +21,11 @@
 
 <script>
 export default {
-    data() {
-        return {
-            isLogin: false,
-        }
-    },
-    created() {
-        const token = localStorage.getItem("token");
-        if (token) {
-            this.isLogin = true;
-        }
-    },
+    props: ['isLogin'],
+    emits: ['logout'],
     methods: {
         doLogout() {
-            localStorage.clear();
-            window.location.reload();
+            this.$emit('logout'); // 부모에게 로그아웃 알림
         }
     }
 }

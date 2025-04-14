@@ -23,7 +23,7 @@ public class VideoController {
     @PostMapping("/add")
     public ResponseEntity<?> videoAdd(@RequestBody VideoSaveReqDto videoSaveReqDto) {
         Video video = videoService.add(videoSaveReqDto);
-        return new ResponseEntity<>(video.getId(), HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
@@ -36,6 +36,18 @@ public class VideoController {
     public ResponseEntity<?> getVideoById(@PathVariable("id") Long id) {
         VideoResDto video = videoService.findById(id);
         return new ResponseEntity<>(video, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> videoUpdate(@RequestBody VideoSaveReqDto videoSaveReqDto, @PathVariable("id") Long id) {
+        videoService.update(videoSaveReqDto, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> videoDelete(@PathVariable("id") Long id) {
+        videoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
