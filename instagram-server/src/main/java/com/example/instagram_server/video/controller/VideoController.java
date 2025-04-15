@@ -8,6 +8,8 @@ import com.example.instagram_server.video.service.VideoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +59,8 @@ public class VideoController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<VideoResDto>> searchVideos(@RequestParam(name = "title") String title, Pageable pageable) {
+    public ResponseEntity<Page<VideoResDto>> searchVideos(@RequestParam(name = "title", required = false) String title,
+                                                          @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Video> videoPage = videoService.searchByTitle(title, pageable);
         Page<VideoResDto> dtoPage = videoPage.map(VideoResDto::new);
         return ResponseEntity.ok(dtoPage);

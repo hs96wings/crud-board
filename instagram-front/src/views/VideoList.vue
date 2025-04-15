@@ -33,12 +33,13 @@
             v-model="searchKeyword"
             label="영상 제목 검색"
             @input="searchVideos"
+            clearable
         >
         </v-text-field>
         <!-- 페이지네이션 -->
-        <div class="text-center">
+        <div class="text-center" v-if="searchKeyword == ''">
             <v-pagination
-                v-model="currentPage"
+                :model-value="currentPage"
                 :length="totalPages"
                 :total-visible="totalPages"
                 rounded="circle"
