@@ -19,7 +19,7 @@
                                     <td>{{ video.id }}</td>
                                     <td><v-btn :to="{path: `/video/${video.id}`}">{{ video.title }}</v-btn></td>
                                     <td>{{ video.uploadedAt }}</td>
-                                    <td v-if="isLogin"><v-btn @click="updateVideo(video.id)">수정</v-btn></td>
+                                    <td v-if="isLogin"><v-btn :to="{path: `/manage/update/${video.id}`}">수정</v-btn></td>
                                     <td v-if="isLogin"><v-btn @click="deleteVideo(video.id)">삭제</v-btn></td>
                                 </tr>
                             </tbody>
@@ -35,6 +35,13 @@
 import axios from 'axios'
 
 export default {
+    props: {
+        isLogin: {
+            type: Boolean,
+            default: false,
+            required: true
+        }
+    },
     data() {
         return {
             videoList: []
@@ -45,11 +52,9 @@ export default {
         this.videoList = response.data;
     },
     methods: {
-        async updateVideo() {
-            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/video/update`)
-        },
-        async deleteVideo() {
-
+        async deleteVideo(videoId) {
+            await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/api/video/delete/${videoId}`)
+            window.location.reload();
         }
     }
 }

@@ -21,7 +21,12 @@
 
 <script>
 export default {
-    props: ['isLogin'],
+    props: {
+        isLogin: {
+            type: Boolean,
+            required: true
+        }
+    },
     emits: ['logout'],
     methods: {
         doLogout() {

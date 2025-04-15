@@ -5,13 +5,14 @@
 
     <v-main>
       <!-- router-view에도 isLogin 전달 -->
-      <router-view />
+      <router-view :isLogin="isLogin"/>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import HeaderComponent from './components/HeaderComponent.vue'
+
 export default {
   name: 'App',
   components: {
@@ -37,7 +38,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
