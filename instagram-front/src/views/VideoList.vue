@@ -28,6 +28,17 @@
                 </v-card>
             </v-col>
         </v-row>
+        <!-- 페이지네이션 -->
+        <div class="text-center">
+            <v-pagination
+                v-model="currentPage"
+                :length="totalPages"
+                :total-visible="totalPages"
+                rounded="circle"
+                @update:modelValue="handlePageChange"
+                color="primary">
+            </v-pagination>
+        </div>
     </v-container>
 </template>
 
@@ -44,17 +55,35 @@ export default {
     },
     data() {
         return {
-            videoList: []
+            videoList: [],
+            currentPage: 1, // vue는 1부터, spring은 0부터이므로 변환 필요
+            totalPages: 0
         }
     },
     async created() {
         const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/list`)
-        this.videoList = response.data;
+        this.videoList = response.data.content;
+    },
+    mounted() {
+        this.fetchVideos();
     },
     methods: {
         async deleteVideo(videoId) {
             await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/api/video/delete/${videoId}`)
             window.location.reload();
+        },
+        async fetchVideos() {
+            const page = this.currentPage - 1 // spring은 0부터 시작
+            const size = 10;
+
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/list?page=${page}&size=${size}`)
+            this.videoList = response.data.content;
+            this.totalPages = response.data.totalPages;
+        },
+        handlePageChange(page) {
+            if (page < 1 || page > this.totalPages) return; // 유효하지 않으면 무시
+            this.currentPage = page;
+            this.fetchVideos(page);
         }
     }
 }

@@ -4,6 +4,16 @@ import * as components from 'vuetify/components'
 
 export default createVuetify(
     {
-        components
-    }
+        components,
+        theme: {
+            defaultTheme: 'light',
+            themes: {
+                light: {
+                    colors: {
+                        primary: '#1976D2' // 기본 파란색
+                    }
+                }
+            }
+        }
+    },
 )
