@@ -6,6 +6,8 @@ import com.example.instagram_server.video.dto.VideoResDto;
 import com.example.instagram_server.video.dto.VideoSaveReqDto;
 import com.example.instagram_server.video.repository.VideoRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,17 +35,8 @@ public class VideoService {
         return videoRepository.save(newVideo);
     }
 
-    public List<VideoListResDto> findAll() {
-        List<Video> videos = videoRepository.findAll();
-        List<VideoListResDto> videoListResDtos = new ArrayList<>();
-        for (Video v : videos) {
-            VideoListResDto videoListResDto = new VideoListResDto();
-            videoListResDto.setId(v.getId());
-            videoListResDto.setTitle(v.getTitle());
-            videoListResDto.setUploadedAt(v.getUploadedAt());
-            videoListResDtos.add(videoListResDto);
-        }
-        return videoListResDtos;
+    public Page<Video> getVideos(Pageable pageable) {
+        return videoRepository.findAll(pageable);
     }
 
     public VideoResDto findById(Long id) {

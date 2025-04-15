@@ -5,6 +5,8 @@ import com.example.instagram_server.video.dto.VideoListResDto;
 import com.example.instagram_server.video.dto.VideoResDto;
 import com.example.instagram_server.video.dto.VideoSaveReqDto;
 import com.example.instagram_server.video.service.VideoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +29,12 @@ public class VideoController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> videoList() {
-        List<VideoListResDto> dtos = videoService.findAll();
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    public ResponseEntity<Page<VideoResDto>> listVideos(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
+        Page<Video> videoPage = videoService.getVideos(PageRequest.of(page, size));
+        Page<VideoResDto> dtoPage = videoPage.map(VideoResDto::new);
+        return ResponseEntity.ok(dtoPage);
+
     }
 
     @GetMapping("/{id}")
