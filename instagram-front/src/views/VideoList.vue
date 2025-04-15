@@ -18,7 +18,7 @@
                                 <tr v-for="video in videoList" :key="video.id">
                                     <td>{{ video.id }}</td>
                                     <td><v-btn :to="{path: `/video/${video.id}`}">{{ video.title }}</v-btn></td>
-                                    <td>{{ video.uploadedAt }}</td>
+                                    <td>{{ video.uploadedAt.slice(0, 19).replace('T', ' ') }}</td>
                                     <td v-if="isLogin"><v-btn :to="{path: `/manage/update/${video.id}`}">수정</v-btn></td>
                                     <td v-if="isLogin"><v-btn @click="deleteVideo(video.id)">삭제</v-btn></td>
                                 </tr>
