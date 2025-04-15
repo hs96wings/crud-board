@@ -28,6 +28,13 @@
                 </v-card>
             </v-col>
         </v-row>
+        <!-- 검색 기능 -->
+        <v-text-field
+            v-model="searchKeyword"
+            label="영상 제목 검색"
+            @input="searchVideos"
+        >
+        </v-text-field>
         <!-- 페이지네이션 -->
         <div class="text-center">
             <v-pagination
@@ -57,7 +64,8 @@ export default {
         return {
             videoList: [],
             currentPage: 1, // vue는 1부터, spring은 0부터이므로 변환 필요
-            totalPages: 0
+            totalPages: 0,
+            searchKeyword: '',
         }
     },
     async created() {
@@ -84,6 +92,22 @@ export default {
             if (page < 1 || page > this.totalPages) return; // 유효하지 않으면 무시
             this.currentPage = page;
             this.fetchVideos(page);
+        },
+        async searchVideos() {
+            try {
+                if (this.searchKeyword.trim === "") {
+                    // 검색어가 없으면 전체 목록 불러오기
+                    const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/list`)
+                    this.videoList = response.data.content;
+                } else {
+                    // 검색어가 있으면 검색 요청
+                    const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/search?title=${this.searchKeyword}`)
+                    this.videoList = response.data.content;
+                }
+            } catch (err) {
+                alert("검색 중 오류가 발생했습니다");
+                console.error(err);
+            }
         }
     }
 }
