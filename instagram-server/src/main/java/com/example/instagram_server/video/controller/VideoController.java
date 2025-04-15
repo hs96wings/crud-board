@@ -7,6 +7,7 @@ import com.example.instagram_server.video.dto.VideoSaveReqDto;
 import com.example.instagram_server.video.service.VideoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,13 @@ public class VideoController {
     public ResponseEntity<?> videoDelete(@PathVariable("id") Long id) {
         videoService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<VideoResDto>> searchVideos(@RequestParam(name = "title") String title, Pageable pageable) {
+        Page<Video> videoPage = videoService.searchByTitle(title, pageable);
+        Page<VideoResDto> dtoPage = videoPage.map(VideoResDto::new);
+        return ResponseEntity.ok(dtoPage);
     }
 
 }

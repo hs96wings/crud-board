@@ -63,4 +63,10 @@ public class VideoService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 영상입니다"));
         videoRepository.delete(video);
     }
+
+    public Page<Video> searchByTitle(String title, Pageable pageable) {
+        if (title == null) title = "";
+
+        return videoRepository.findByTitleContaining(title, pageable);
+    }
 }
