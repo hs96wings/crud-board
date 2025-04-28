@@ -9,7 +9,8 @@
                   <v-btn :to="{path: '/'}">Home</v-btn>
               </v-col>
               <v-col class="d-flex justify-end">
-                  <v-btn v-if="isLogin" :to="{path: '/manage'}">관리</v-btn>
+                  <v-btn v-if="isAdmin" :to="{path: '/manage'}">관리</v-btn>
+                  <v-btn v-if="!isLogin" :to="{path: '/join'}">회원가입</v-btn>
                   <v-btn v-if="!isLogin" :to="{path: '/login'}">로그인</v-btn>
                   <v-btn v-if="isLogin" @click="doLogout">로그아웃</v-btn>
               </v-col>
@@ -23,6 +24,12 @@ export default {
     props: {
         isLogin: {
             type: Boolean,
+            default: false,
+            required: true
+        },
+        isAdmin: {
+            type: Boolean,
+            default: null,
             required: true
         }
     },

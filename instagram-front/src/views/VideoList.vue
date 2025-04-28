@@ -11,7 +11,7 @@
                                     <th>ID</th>
                                     <th>제목</th>
                                     <th>업로드 날짜</th>
-                                    <th v-if="isLogin" colspan="2">관리 메뉴</th>
+                                    <th v-if="isAdmin" colspan="2">관리 메뉴</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -19,8 +19,8 @@
                                     <td>{{ video.id }}</td>
                                     <td><v-btn :to="{path: `/video/${video.id}`}">{{ video.title }}</v-btn></td>
                                     <td>{{ video.uploadedAt.slice(0, 19).replace('T', ' ') }}</td>
-                                    <td v-if="isLogin"><v-btn :to="{path: `/manage/update/${video.id}`}">수정</v-btn></td>
-                                    <td v-if="isLogin"><v-btn @click="deleteVideo(video.id)">삭제</v-btn></td>
+                                    <td v-if="isAdmin"><v-btn :to="{path: `/manage/update/${video.id}`}">수정</v-btn></td>
+                                    <td v-if="isAdmin"><v-btn @click="deleteVideo(video.id)">삭제</v-btn></td>
                                 </tr>
                             </tbody>
                         </v-table>
@@ -56,6 +56,11 @@ import axios from 'axios'
 export default {
     props: {
         isLogin: {
+            type: Boolean,
+            default: false,
+            required: true
+        },
+        isAdmin: {
             type: Boolean,
             default: false,
             required: true

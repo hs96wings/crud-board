@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { jwtDecode } from 'jwt-decode';
 import HeaderComponent from './components/HeaderComponent.vue'
 
 export default {
@@ -21,11 +22,14 @@ export default {
   data() {
     return {
       isLogin: false,
+      isAdmin: false,
     };
   },
   created() {
     const token = localStorage.getItem("token");
     if (token){
+      const decodeToken = jwtDecode(token);
+      this.isAdmin = decodeToken.role === 'ADMIN';
       this.isLogin = true;
     }
   },

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from "@/views/HomePage.vue"
 import LoginPage from "@/views/LoginPage.vue"
+import JoinPage from "@/views/JoinPage.vue"
 import ManageAddVideo from "@/views/ManageAddVideo.vue"
 import ManageUpdateVideo from "@/views/ManageUpdateVideo.vue"
 import VideoList from "@/views/VideoList.vue"
@@ -10,6 +11,7 @@ const routes = [
     { path: '/', name: 'HomePage', component: HomePage },
     { path: '/video/list', name: 'VideoList', component: VideoList },
     { path: '/login', name: 'LoginPage', component: LoginPage },
+    { path: '/join', name: 'JoinPage', component: JoinPage},
     { path: '/manage', name: 'ManageAddVideo', component: ManageAddVideo, meta: { requireAuth: true } },
     { path: '/video/:id', name: 'videoDetail', component: VideoDetail },
     { path: '/manage/update/:id', name: 'ManageUpdateVideo', component: ManageUpdateVideo, meta: { requireAuth: true }}
