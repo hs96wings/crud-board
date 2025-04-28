@@ -34,7 +34,7 @@ public class Securityconfigs {
                 .httpBasic(AbstractHttpConfigurer::disable) // HTTP Basic 비활성화
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/video/**").permitAll() // GET 요청 허용
-                        .requestMatchers("/api/video/**").authenticated() // 나머지는 인증 필요
+                        .requestMatchers("/api/video/**").hasRole("ADMIN") // 나머지는 인증 필요
                         .anyRequest().permitAll() // 나머지는 허용
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 방식 사용하지 않음

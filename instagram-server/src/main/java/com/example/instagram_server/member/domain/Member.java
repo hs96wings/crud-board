@@ -18,4 +18,8 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String userid;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Role role = Role.USER;
 }

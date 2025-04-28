@@ -37,7 +37,7 @@ public class MemberController {
         Member member = memberService.login(memberLoginReqDto);
 
         // 일치할경우 access 토큰 발행
-        String jwtToken = jwtTokenProvider.createToken(member.getUserid());
+        String jwtToken = jwtTokenProvider.createToken(member.getUserid(), member.getRole().toString());
         Map<String, Object> loginInfo = new HashMap<>();
         loginInfo.put("id", member.getId());
         loginInfo.put("token", jwtToken);
