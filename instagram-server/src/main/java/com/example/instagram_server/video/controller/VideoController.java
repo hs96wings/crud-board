@@ -25,13 +25,13 @@ public class VideoController {
         this.videoService = videoService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<?> videoAdd(@RequestBody VideoSaveReqDto videoSaveReqDto) {
         Video video = videoService.add(videoSaveReqDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public ResponseEntity<Page<VideoResDto>> listVideos(@RequestParam(name = "page", defaultValue = "0") int page,
                                                         @RequestParam(name = "size", defaultValue = "10") int size) {
         Page<Video> videoPage = videoService.getVideos(PageRequest.of(page, size));
@@ -46,13 +46,13 @@ public class VideoController {
         return new ResponseEntity<>(video, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> videoUpdate(@RequestBody VideoSaveReqDto videoSaveReqDto, @PathVariable("id") Long id) {
         videoService.update(videoSaveReqDto, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> videoDelete(@PathVariable("id") Long id) {
         videoService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

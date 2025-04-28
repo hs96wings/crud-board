@@ -44,7 +44,7 @@ export default {
     methods: {
         async update() {
             const videoData = { title: this.title, videoId: this.videoId }
-            await axios.put(`${process.env.VUE_APP_API_BASE_URL}/api/video/update/${this.id}`, videoData)
+            await axios.put(`${process.env.VUE_APP_API_BASE_URL}/api/video/${this.id}`, videoData)
             window.location.href = '/video/list'
         }
     }

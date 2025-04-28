@@ -70,7 +70,7 @@ export default {
         }
     },
     async created() {
-        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/list`)
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/`)
         this.videoList = response.data.content;
     },
     mounted() {
@@ -78,14 +78,14 @@ export default {
     },
     methods: {
         async deleteVideo(videoId) {
-            await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/api/video/delete/${videoId}`)
+            await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/api/video/${videoId}`)
             window.location.reload();
         },
         async fetchVideos() {
             const page = this.currentPage - 1 // spring은 0부터 시작
             const size = 10;
 
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/list?page=${page}&size=${size}`)
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/?page=${page}&size=${size}`)
             this.videoList = response.data.content;
             this.totalPages = response.data.totalPages;
         },
@@ -98,7 +98,7 @@ export default {
             try {
                 if (this.searchKeyword.trim === "") {
                     // 검색어가 없으면 전체 목록 불러오기
-                    const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/list`)
+                    const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/video/`)
                     this.videoList = response.data.content;
                 } else {
                     // 검색어가 있으면 검색 요청

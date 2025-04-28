@@ -32,7 +32,11 @@ public class Securityconfigs {
                 .cors(cors -> cors.configurationSource(configurationSource()))
                 .csrf(AbstractHttpConfigurer::disable) // csrf 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable) // HTTP Basic 비활성화
-                .authorizeHttpRequests(a -> a.requestMatchers(HttpMethod.POST, "/api/video/add").authenticated().anyRequest().permitAll()) // 영상을 추가하는 곳만 막음
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/api/video/**").permitAll() // GET 요청 허용
+                        .requestMatchers("/api/video/**").authenticated() // 나머지는 인증 필요
+                        .anyRequest().permitAll() // 나머지는 허용
+                )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 방식 사용하지 않음
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -41,7 +45,11 @@ public class Securityconfigs {
     @Bean
     CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "http://localhost:8080",
+                "http://43.200.192.246:3000" // 서버 주소
+        ));
         configuration.setAllowedMethods(List.of("*")); // 모든 HTTP 메서드 허용
         configuration.setAllowedHeaders(List.of("*")); // 모든 Header 값 허용
         configuration.setAllowCredentials(true); // 자격증명 허용
